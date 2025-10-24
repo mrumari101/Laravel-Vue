@@ -20,6 +20,23 @@
         @endif
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+        
+        @php
+        $currentDomain = request()->getHost();
+        $isCentralDomain = $currentDomain === config('tenancy.central_domains')[0];
+        $requestUrl = request()->fullUrl();
+        @endphp
+
+        <div class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 bg-white dark:bg-[#161615] p-4 rounded-lg">
+            <h2 class="font-medium mb-2">Debug Information</h2>
+            <ul class="space-y-1">
+                <li>Current Domain: {{ $currentDomain }}</li>
+                <li>Is Central Domain: {{ $isCentralDomain ? 'Yes' : 'No' }}</li>
+                <li>Request URL: {{ $requestUrl }}</li>
+                <li>Application Environment: {{ app()->environment() }}</li>
+            </ul>
+        </div>
+
         <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
             @if (Route::has('login'))
                 <nav class="flex items-center justify-end gap-4">
